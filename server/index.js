@@ -6,6 +6,7 @@ const path = require("path");
 const app = express();
 const fs = require("fs");
 const PORT = process.env.PORT;
+const { createUniqueName } = require("./utils/splitName");
 
 const storage = multer.diskStorage({
   destination: async (req, file, callback) => {
@@ -21,13 +22,7 @@ const storage = multer.diskStorage({
       return callback(null, file.originalname);
     }
 
-    let i = 0;
-    let newName;
-    do {
-      i += 1;
-      newName = file.originalname + " " + `(${i})`;
-    } while (fs.existsSync(path.join(folderPath + "/" + newName)));
-    return callback(null, newName);
+    return callback(null, createUniqueName(file.originalname));
   },
 });
 
