@@ -2,7 +2,7 @@
 
 ~ currently WIP ~
 
-A full-stack project that handles images upload. Based off the shopify backend project required for their 2021 summer internship - I didn't have time to work on it those days, but I liked the idea so ¯\\\_(ツ)\_/¯
+A full-stack application that handles images upload. Based off the shopify backend project required for their 2021 summer internship - I didn't have time to work on it those days, but I liked the idea so ¯\\\_(ツ)\_/¯
 
 ## Tech-stack so far
 
@@ -26,3 +26,6 @@ users can upload/delete/update images to their storage, users can make them publ
 
 Sell & buy:
 users can select which images to sell, use Stripe for purchase experience.
+
+Publishing:
+Once the application is solid, deploy it and use a platform like Cloudinary to handle image storage.
