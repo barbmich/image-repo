@@ -41,8 +41,6 @@ describe("utils testing", function () {
   });
 
   describe("tests for createUniqueName", function () {
-    it(``, function () {
-      console.log(createUniqueName("fakename.jpg"));
-    });
+    it(``, function () {});
   });
 });

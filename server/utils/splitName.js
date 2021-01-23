@@ -17,7 +17,6 @@ function createUniqueName(username, name) {
   const fileFolder = path.join(
     path.dirname(require.main.filename) + "/repo" + "/" + username
   );
-  console.log(fileFolder);
   const [ante, ext] = splitAtIndex(name);
   let i = 0;
   let finalFileName;

@@ -24,9 +24,6 @@ const storage = multer.diskStorage({
     const fileExists = fs.existsSync(
       path.join(folderPath + "/" + username + "/" + file.originalname)
     );
-    console.log(
-      path.join(folderPath + "/" + username + "/" + file.originalname)
-    );
 
     if (!fileExists) {
       return callback(null, file.originalname);
