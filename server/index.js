@@ -9,25 +9,30 @@ const PORT = process.env.PORT;
 const { createUniqueName } = require("./utils/splitName");
 
 const storage = multer.diskStorage({
-  destination: async (_req, _file, callback) => {
-    const folderPath = path.join(__dirname + "/repo");
+  destination: async (req, _file, callback) => {
+    const username = req.body.user;
+    const folderPath = path.join(__dirname + "/repo" + "/" + username);
     const folderExists = fs.existsSync(folderPath);
     if (!folderExists) {
       fs.mkdirSync(folderPath);
     }
     callback(null, folderPath);
   },
-  filename: (_req, file, callback) => {
+  filename: (req, file, callback) => {
+    const username = req.body.user;
     const folderPath = path.join(__dirname + "/repo");
     const fileExists = fs.existsSync(
-      path.join(folderPath + "/" + file.originalname)
+      path.join(folderPath + "/" + username + "/" + file.originalname)
+    );
+    console.log(
+      path.join(folderPath + "/" + username + "/" + file.originalname)
     );
 
     if (!fileExists) {
       return callback(null, file.originalname);
     }
 
-    return callback(null, createUniqueName(file.originalname));
+    return callback(null, createUniqueName(username, file.originalname));
   },
 });
 
@@ -37,7 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-app.post("/upload", upload.array("file"), (req, res) => {
+app.post("/upload", upload.array("image"), (req, res) => {
   if (!req.files) {
     console.log("No files received");
     return res.send("No files received");

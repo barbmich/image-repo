@@ -13,10 +13,11 @@ function splitAtIndex(name) {
   return [name.substring(0, index), name.substring(index)];
 }
 
-function createUniqueName(name) {
+function createUniqueName(username, name) {
   const fileFolder = path.join(
-    path.dirname(require.main.filename) + "/repo" + "/"
+    path.dirname(require.main.filename) + "/repo" + "/" + username
   );
+  console.log(fileFolder);
   const [ante, ext] = splitAtIndex(name);
   let i = 0;
   let finalFileName;
@@ -24,7 +25,7 @@ function createUniqueName(name) {
   do {
     i += 1;
     finalFileName = `${ante} (${i})${ext}`;
-    fileFullPath = fileFolder + finalFileName;
+    fileFullPath = fileFolder + "/" + finalFileName;
   } while (fs.existsSync(fileFullPath));
   return finalFileName;
 }
