@@ -1,50 +1,15 @@
 require("dotenv").config();
 const express = require("express");
-const multer = require("multer");
 const morgan = require("morgan");
-const path = require("path");
 const app = express();
-const fs = require("fs");
 const PORT = process.env.PORT;
-const { createUniqueName } = require("./utils/splitName");
-
-const storage = multer.diskStorage({
-  destination: (req, _file, callback) => {
-    const username = req.body.user;
-    const folderPath = path.join(__dirname + "/repo" + "/" + username);
-    const folderExists = fs.existsSync(folderPath);
-    if (!folderExists) {
-      fs.mkdirSync(folderPath);
-    }
-    callback(null, folderPath);
-  },
-  filename: (req, file, callback) => {
-    const username = req.body.user;
-    const folderPath = path.join(__dirname + "/repo");
-    const fileExists = fs.existsSync(
-      path.join(folderPath + "/" + username + "/" + file.originalname)
-    );
-
-    if (!fileExists) {
-      return callback(null, file.originalname);
-    }
-
-    return callback(null, createUniqueName(username, file.originalname));
-  },
-});
-
-const upload = multer({ storage });
+const upload = require("./routes/upload");
+const auth = require("./routes/auth");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-
-app.post("/upload", upload.array("image"), (req, res) => {
-  if (!req.files) {
-    return res.send("No files received");
-  } else {
-    return res.send("files received");
-  }
-});
+app.use("/upload", upload);
+// app.use("/auth", auth);
 
 app.listen(PORT, () => console.log(`server listening on port ${PORT}`));
