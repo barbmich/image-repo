@@ -47,6 +47,7 @@ function Upload() {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
         <button type="submit">submit</button>
       </form>
