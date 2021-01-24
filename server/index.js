@@ -9,7 +9,7 @@ const PORT = process.env.PORT;
 const { createUniqueName } = require("./utils/splitName");
 
 const storage = multer.diskStorage({
-  destination: async (req, _file, callback) => {
+  destination: (req, _file, callback) => {
     const username = req.body.user;
     const folderPath = path.join(__dirname + "/repo" + "/" + username);
     const folderExists = fs.existsSync(folderPath);
@@ -41,10 +41,8 @@ app.use(morgan("dev"));
 
 app.post("/upload", upload.array("image"), (req, res) => {
   if (!req.files) {
-    console.log("No files received");
     return res.send("No files received");
   } else {
-    console.log("files received");
     return res.send("files received");
   }
 });
