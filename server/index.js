@@ -10,6 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use("/upload", upload);
-// app.use("/auth", auth);
+app.use("/auth", auth);
 
 app.listen(PORT, () => console.log(`server listening on port ${PORT}`));
